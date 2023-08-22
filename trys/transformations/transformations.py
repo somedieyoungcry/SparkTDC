@@ -15,7 +15,23 @@ class Transformations:
         joined_df2 = joined_df1.join(cars_df, policy_df[c.CARID] == cars_df[c.BRANDID], c.JOIN1)
         joined_df3 = joined_df2.join(incidents_df, policy_df[c.IDPOLICY] == incidents_df[c.IDPOL], c.JOIN2)
 
-        return joined_df3
+        selec_camps = [
+            policy_df[c.IDPOLICY],
+            clients_df[c.COMPLETE_NAME],
+            policy_df[c.CARID],
+            incidents_df[c.INCIDENT_ID],
+            policy_df[c.CAR_COLOR],
+            policy_df[c.SUM_ASSURED],
+            policy_df[c.CAR_MODEL],
+            policy_df[c.CURRENT_PAYMENT],
+            cars_df[c.BRAND_NAME],
+            cars_df[c.VELOCITY_MAX],
+            cars_df[c.COUNTRY_NAME],
+            clients_df[c.USER_AGE]
+        ]
+        selec_df = joined_df3.select(*selec_camps)
+
+        return selec_df
 
     @staticmethod
     def rank_incidents(df: DataFrame) -> DataFrame:
